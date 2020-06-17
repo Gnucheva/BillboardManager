@@ -16,11 +16,6 @@ public class AfishaManager {
         if (customMovieLength > 0 & customMovieLength < 10) {
             defaultMovieLength = customMovieLength;
         }
-        Movie[] movies = repository.findAll();
-        int moviesLength = movies.length;
-        if (moviesLength < defaultMovieLength) {
-            defaultMovieLength = moviesLength;
-        }
     }
 
     public void addMovie(Movie movie) {

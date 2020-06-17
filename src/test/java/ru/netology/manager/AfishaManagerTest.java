@@ -33,6 +33,9 @@ class AfishaManagerTest {
 
     }
 
+
+
+
     @Test
     void mustShowValid() {
         AfishaManager manager = new AfishaManager(repository, 5);

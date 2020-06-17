@@ -65,5 +65,13 @@ class AfishaManagerTest {
 
     }
 
+    @Test
+    void mustShowInvalid() {
+        AfishaManager manager = new AfishaManager(repository, -5);
+        Movie[] actual = manager.getLastAdd();
+        assertArrayEquals(expected, actual);
+
+
+    }
 
 }

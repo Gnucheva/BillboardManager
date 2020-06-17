@@ -61,23 +61,23 @@ class AfishaRepositoryTest {
     }
 
     @Test
-    void shouldFindById(){
-        Movie actual=repository.findById(5) ;
+    void shouldFindById() {
+        Movie actual = repository.findById(5);
         Movie expected = new Movie(5, "InvisibleMan", "http://", "horrors");
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
     }
 
     @Test
-    void shouldFindInvalidId(){
-        Movie actual=repository.findById(100) ;
+    void shouldFindInvalidId() {
+        Movie actual = repository.findById(100);
         Movie expected = null;
-        assertEquals(expected,actual);
+        assertEquals(expected, actual);
 
     }
 
     @Test
-    void shouldRemoveById(){
-        repository.removeById(5) ;
+    void shouldRemoveById() {
+        repository.removeById(5);
         Movie[] actual = repository.findAll();
         Movie[] expected = {new Movie(1, "Bladshot", "http://", "actionMovie"),
                 new Movie(2, "Ahead", "http://", "cartoon"),
@@ -91,7 +91,7 @@ class AfishaRepositoryTest {
                 new Movie(11, "NumberFive", "http://", "horrors")
 
         };
-        assertArrayEquals(expected,actual);
+        assertArrayEquals(expected, actual);
     }
 
 }

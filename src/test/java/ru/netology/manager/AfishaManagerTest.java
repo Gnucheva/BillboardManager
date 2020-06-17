@@ -2,39 +2,68 @@ package ru.netology.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import ru.netology.domain.Movie;
 import ru.netology.repository.AfishaRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
-@ExtendWith(MockitoExtension.class)
 
 class AfishaManagerTest {
-    @Mock
-    private AfishaRepository repository ;
-    @InjectMocks
-    private MovieManager manager ;
+
+    AfishaRepository repository = new AfishaRepository();
+
+    Movie[] expected = {new Movie(10, "NumberFour", "http://", "actionMovie"),
+            new Movie(9, "NumberThree", "http://", "actionMovie"),
+            new Movie(8, "NumberTwo", "http://", "actionMovie"),
+            new Movie(7, "NumberOne", "http://", "comedy"),
+            new Movie(6, "Trolls", "http://", "cartoon"),
+            new Movie(5, "InvisibleMan", "http://", "horrors"),
+            new Movie(4, "Gentlemen", "http://", "actionMovie"),
+            new Movie(3, "HotelBelgrad", "http://", "comedy"),
+            new Movie(2, "Ahead", "http://", "cartoon"),
+            new Movie(1, "Bladshot", "http://", "actionMovie")
+
+    };
+
+    @Test
+    void mustShowTenMovie() {
+        AfishaManager manager = new AfishaManager(repository, 10);
+        Movie[] actual = manager.getLastAdd();
+        assertArrayEquals(expected, actual);
 
 
-    @BeforeEach
-    void setUp() {
     }
 
     @Test
-    void addMovie() {
+    void mustShowValid() {
+        AfishaManager manager = new AfishaManager(repository, 5);
+        Movie movieToAdd = new Movie(11, "NumberFive", "http://", "horrors");
+        manager.addMovie(movieToAdd);
+        Movie[] actual = manager.getLastAdd();
+        Movie[] expected = {new Movie(11, "NumberFive", "http://", "horrors"),
+                new Movie(10, "NumberFour", "http://", "actionMovie"),
+                new Movie(9, "NumberThree", "http://", "actionMovie"),
+                new Movie(8, "NumberTwo", "http://", "actionMovie"),
+                new Movie(7, "NumberOne", "http://", "comedy")
+
+        };
+        assertArrayEquals(expected, actual);
     }
 
     @Test
-    void getLastAdd() {
+    void mustShowZero() {
+        AfishaManager manager = new AfishaManager(repository, 0);
+        Movie[] actual = manager.getLastAdd();
+        assertArrayEquals(expected, actual);
+
     }
 
     @Test
-    void getAll() {
+    void mustShowOverMax() {
+        AfishaManager manager = new AfishaManager(repository, 11);
+        Movie[] actual = manager.getLastAdd();
+        assertArrayEquals(expected, actual);
+
     }
 
-    @Test
-    void showAll() {
-    }
+
 }

@@ -1,10 +1,17 @@
 package ru.netology.manager;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.netology.domain.Movie;
 
+@Data
+
 public class MovieManager {
-    Movie[] movies = new Movie[0];
-    int defaultMovieLength = 10;
+    private Movie[] movies = new Movie[0];
+    private int defaultMovieLength = 10;
+
+
 
 
     MovieManager() {

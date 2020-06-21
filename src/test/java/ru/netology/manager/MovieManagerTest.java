@@ -44,17 +44,8 @@ class MovieManagerTest {
     @Test
     void mustShowNothing() {
         MovieManager manager = new MovieManager(0);
-        manager.addMovie(first);
-        manager.addMovie(second);
-        manager.addMovie(third);
-        manager.addMovie(fourth);
-        manager.addMovie(fifth);
-        manager.addMovie(sixth);
-        manager.addMovie(seventh);
-        manager.addMovie(eighth);
-        manager.addMovie(ninth);
-        manager.addMovie(tenth);
         Movie[] actual = manager.getLastAdd();
+        Movie [] expected = new Movie[0];
         assertArrayEquals(expected, actual);
     }
 

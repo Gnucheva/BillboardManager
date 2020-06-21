@@ -3,17 +3,7 @@ package ru.netology.repository;
 import ru.netology.domain.Movie;
 
 public class AfishaRepository {
-    Movie[] movies = {new Movie(1, "Bladshot", "http://", "actionMovie"),
-            new Movie(2, "Ahead", "http://", "cartoon"),
-            new Movie(3, "HotelBelgrad", "http://", "comedy"),
-            new Movie(4, "Gentlemen", "http://", "actionMovie"),
-            new Movie(5, "InvisibleMan", "http://", "horrors"),
-            new Movie(6, "Trolls", "http://", "cartoon"),
-            new Movie(7, "NumberOne", "http://", "comedy"),
-            new Movie(8, "NumberTwo", "http://", "actionMovie"),
-            new Movie(9, "NumberThree", "http://", "actionMovie"),
-            new Movie(10, "NumberFour", "http://", "actionMovie")
-    };
+    Movie[] movies = new Movie[0];
 
     public Movie[] findAll() {
         return movies;

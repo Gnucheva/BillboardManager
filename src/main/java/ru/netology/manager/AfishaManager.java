@@ -1,10 +1,14 @@
 package ru.netology.manager;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.netology.domain.Movie;
 import ru.netology.repository.AfishaRepository;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class AfishaManager {
 
@@ -12,8 +16,16 @@ public class AfishaManager {
     private int defaultMovieLength = 10;
     private int customMovieLength;
 
-    AfishaManager() {
+
+    public AfishaManager(AfishaRepository repository, int customMovieLength) {
+        this.repository = repository;
+        this.customMovieLength = customMovieLength;
     }
+
+    public AfishaManager(AfishaRepository repository) {
+        this.repository = repository;
+    }
+
 
     public void setCustomMovieLength(int customMovieLength) {
         this.customMovieLength = customMovieLength;
@@ -26,25 +38,25 @@ public class AfishaManager {
 
     public Movie[] getAll() {
         Movie[] movies = repository.findAll();
-        Movie[] result = new Movie[movies.length];
-        if (customMovieLength == 0 && movies.length <= defaultMovieLength) {
-            result = new Movie[movies.length];
+        int length = movies.length;
+        if (customMovieLength <= 0) {
+            if (defaultMovieLength < length) {
+                length = defaultMovieLength;
+            }
+        } else {
+            if (customMovieLength < length) {
+                length = customMovieLength;
+            }
+
         }
-        if (customMovieLength != 0 && movies.length >= defaultMovieLength++) {
-            result = new Movie[10];
-        }
-        if (customMovieLength != 0 && movies.length >= customMovieLength) {
-            result = new Movie[customMovieLength];
-        }
-        if (customMovieLength != 0 && movies.length < customMovieLength) {
-            result = new Movie[movies.length];
-        }
+        Movie[] result = new Movie[length];
         for (int i = 0; i < result.length; i++) {
             int index = movies.length - i - 1;
             result[i] = movies[index];
         }
         return result;
     }
+
 
     public Movie[] showAll() {
         return repository.findAll();

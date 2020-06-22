@@ -17,7 +17,7 @@ class AfishaManagerMockitoTest {
     @Mock
     private AfishaRepository repository;
     @InjectMocks
-    AfishaManager manager = new AfishaManager();
+    AfishaManager manager = new AfishaManager(repository);
 
     private Movie first = new Movie(1, "Bladshot", "http://", "actionMovie");
     private Movie second = new Movie(2, "Ahead", "http://", "cartoon");
@@ -59,26 +59,41 @@ class AfishaManagerMockitoTest {
     }
 
     @Test
-    void addMovie() {
-        Movie[] returned = new Movie[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
+    void mustShowMoreThanTen() {
+        Movie[] returned = new Movie[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleven};
         doReturn(returned).when(repository).findAll();
-        doNothing().when(repository).save(tenth);
-        manager.addMovie(tenth);
-        Movie[] expected = new Movie[]{tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
+        Movie[] actual = manager.getAll();
+        Movie[] expected = new Movie[]{eleven, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
+        assertArrayEquals(expected, actual);
+        verify(repository).findAll();
+
+
+    }
+
+    @Test
+    void mustShowLessThanTen() {
+        Movie[] returned = new Movie[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth};
+        doReturn(returned).when(repository).findAll();
+        Movie[] actual = manager.getAll();
+        Movie[] expected = new Movie[]{ninth, eighth, seventh, sixth, fifth, fourth, third, second, first};
+        assertArrayEquals(expected, actual);
+        verify(repository).findAll();
+
+    }
+
+    @Test
+    void addMovie() {
+        Movie[] returned = new Movie[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth, eleven};
+        doReturn(returned).when(repository).findAll();
+        doNothing().when(repository).save(eleven);
+        manager.addMovie(eleven);
+        Movie[] expected = new Movie[]{eleven, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
         Movie[] actual = manager.getAll();
         assertArrayEquals(expected, actual);
 
 
     }
 
-    @Test
-    void addMoreThanTenMovie() {
-        Movie[] returned = new Movie[]{first, second, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth};
-        doReturn(returned).when(repository).findAll();
-        Movie[] expected = new Movie[]{eleven, tenth, ninth, eighth, seventh, sixth, fifth, fourth, third, second};
-        Movie[] actual = manager.getAll();
-        verify(repository).findAll();
-    }
 
     @Test
     void addMovieValid() {
@@ -134,4 +149,25 @@ class AfishaManagerMockitoTest {
         verify(repository).findAll();
     }
 
+    @Test
+    void shouldShowLessCustom() {
+        AfishaManager manager = new AfishaManager(repository, 0);
+        Movie[] returned = new Movie[]{first, second, third, fourth, fifth};
+        doReturn(returned).when(repository).findAll();
+        Movie[] actual = manager.getAll();
+        Movie[] expected = new Movie[]{fifth, fourth, third, second, first};
+        assertArrayEquals(actual, expected);
+        verify(repository).findAll();
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
